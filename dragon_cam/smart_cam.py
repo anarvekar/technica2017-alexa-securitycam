@@ -7,7 +7,7 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 
 # Define constants
-DEVICE_NUMBER = 1
+DEVICE_NUMBER = 0
 IMAGE_FILE = "detected_face.jpg"
 
 # Get XML file input
@@ -80,27 +80,9 @@ while retval:
 
         i += 1
 
-# send email
-msg = MIMEMultipart()
-msg.attach(MIMEText("Face detected!"))
-msg['Subject'] = "Someone detected"
-msg['From'] = "linaro@localhost"
-msg['To'] = "<eshresco@gmail.com>"
+       # break
+    #break
 
-try:
-    f = open(IMAGE_FILE, "rb")
-    img = MIMEImage( f.read() )
-    f.close()
-    msg.attach(img)
-except IOError:
-    print "Error: cannot find", IMAGE_FILE
-
-# use sendmail
-s = smtplib.SMTP('localhost')
-s.set_debuglevel(1)
-s.sendmail(msg['From'], msg['To'], msg.as_string())
-s.quit()
-
-print "Email sent!"
+print "Picture taken!"
         
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from skimage.measure import structural_similarity as ssim
+from skimage.measure import compare_ssim as ssim #structural_similarity as ssim
 #import matplotlib.pyplot as plt
 import numpy as np
 import cv2
@@ -51,16 +51,16 @@ name = images[0][0]
 DEVICE_NUMBER = 1 
 
 # Initialize webcam
-vc = cv2.VideoCapture(DEVICE_NUMBER)
+#vc = cv2.VideoCapture(DEVICE_NUMBER)
 cnt = 0
 
 while  cnt <  1000:
     cnt += 1
 
 # Check if the webcam works
-if vc.isOpened():
+#if vc.isOpened():
     # Try to get the first frame
-    retval, frame = vc.read()
+#    retval, frame = vc.read()
 
 #else:
     # Exit program
@@ -74,7 +74,7 @@ frame= []
 #while retval:
 while True:
     # define frame
-    frame_show = frame
+    #frame_show = frame
     #cv2.imshow(IMAGE_FILE, frame_show)
         
     if i%5 == 0:
@@ -85,12 +85,11 @@ while True:
         # detect objects and return array of faces
         for img in range(len(images)):
             #val = compare_images(frame, images[img][1], "Comparison")
-            
             val = compare_images(detected, images[img][1], "comparison") 
             if (val[0] < m and val[1] > s):
                 s = val[1]
                 m = val[0]
-                name = images[img][0]
+                name = images[img][0] 
             else:
                 count = count+1
 
@@ -99,19 +98,21 @@ while True:
 
         # save frame as image file
         #cv2.imwrite(IMAGE_FILE, frame_show)
-        
+        i += 1
+
         # exit
-        #break
+        break
+
+    break 
 
         # read next frame
         #retval, frame = vc.read()
 
          # exit webcam-loop if escape pressed
-        if cv2.waitKey(1) == 27:
-            break
+        #if cv2.waitKey(1) == 27:
+        #    break
 
-        i += 1
-
+        
 # send email --------------------------
 fromaddr = "technica2017test@gmail.com"
 toaddr = "an5vq@virginia.edu" 
@@ -134,6 +135,8 @@ try:
     msg.attach(part)
 except IOError:
     print "Error: cannot find", IMAGE_FILE
+
+print "Check email!"
 
 # use sendmail
 server = smtplib.SMTP('smtp.gmail.com', 587)
